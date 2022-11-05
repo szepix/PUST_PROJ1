@@ -33,7 +33,7 @@ end
 
 %% Plot
 set(0,'defaultLineLineWidth',1);
-figure
+f = figure
 subplot(2,1,1)
 stairs(1:kk,Y)
 xlabel("k")
@@ -49,4 +49,4 @@ ylabel("u")
 set(get(gca,'ylabel'),'rotation',0)
 title("U od k")
 ylim([0.2, 0.8])
-exportgraphics(gca,'odp_skok.pdf')
+exportgraphics(f,'odp_skok.pdf')
