@@ -26,7 +26,7 @@ for k = kp:kk
 end
 
 %% Plot
-set(0,'defaultLineLineWidth',1);
+
 stairs(1:kk,Y)
 hold on
 stairs(1:kk,U,"--")
