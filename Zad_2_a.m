@@ -33,7 +33,7 @@ end
 
 %% Plot
 set(0,'defaultLineLineWidth',1);
-f = figure
+f = figure;
 subplot(2,1,1)
 stairs(1:kk,Y)
 xlabel("k")
