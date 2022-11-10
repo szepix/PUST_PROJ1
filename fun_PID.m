@@ -1,6 +1,8 @@
-clear all
+function Blad = fun_PID(zmienne)
 
 %% Inicjalizacja zmienych
+
+Blad = 0;
 
 T = 0.5; %Czas próbkowania
 t_sym = 100; %Czas symulacji (w sekundach)
@@ -22,13 +24,14 @@ e(1:kp) = 0;
 
 %Zmiana wartości zadanej
 y_zad(1:60) = 4;
-y_zad(60:kk) = 4.1;
+y_zad(60:300) = 4.2;
+y_zad(300:kk) = 3.8;
 
 %% Parametry Regulatora
 
-Kp = 1.;
-Ti = 10;
-Td = 3;
+Kp = zmienne(1)
+Ti = zmienne(2)
+Td = zmienne(3)
 
 r0 = Kp*(1 + T/(2*Ti) + Td/T);
 r1 = Kp*(T/(2*Ti) - (2*Td)/T -1);
@@ -42,18 +45,21 @@ for k = kp:kk
   
     e(k) = y_zad(k) - Y(k);
     U_now = U(k-1) + r0*e(k) + r1*e(k-1) + r2*e(k-2);
-%     if U_now < 0.3
-%         U_now = 0.3;
-%     elseif U_now > 0.7
-%         U_now = 0.7;
-%     end
+    dU = U_now - U(k-1);
+    if dU > 0.05
+        dU = 0.05;
+    elseif dU < -0.05
+        dU = -0.05;
+    end
+    U_now = U(k-1) + dU;
+
+    if U_now < Umin
+        U_now = Umin;
+    elseif U_now > Umax
+        U_now = Umax;
+    end
     U(k) = U_now;
 
-end
+    Blad = Blad + (y_zad(k) - Y(k))^2;
 
-stairs(1:kk,Y)
-hold on
-stairs(1:kk,y_zad,"--")
-hold off
-legend("y(k)","y_z_a_d(k)")
-% exportgraphics(gca,'y_p_p.pdf')
+end 

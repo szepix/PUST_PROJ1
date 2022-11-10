@@ -26,5 +26,6 @@ xlabel("k")
 ylabel("y")
 set(get(gca,'ylabel'),'rotation',0)
 title("Skok jednostkowy")
+save("odp_skok.mat", "Y");
 % ylim([3.4, 4.6])
 % exportgraphics(gca,'skok_jedn.pdf')
