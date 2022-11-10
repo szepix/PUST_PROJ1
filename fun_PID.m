@@ -5,12 +5,10 @@ function Blad = fun_PID(zmienne)
 Blad = 0;
 
 T = 0.5; %Czas próbkowania
-t_sym = 100; %Czas symulacji (w sekundach)
 
-kp = 12; %Krok początkowy startu symulacji
-kk = t_sym/T; %Krok końcowy
+kp = 150; %początek symulacji
+kk = 650; %koniec symulacji
 
-ks = 60; %Czas zmany wartości zadanej
 
 Upp = 0.5;
 Ypp = 4;
@@ -23,9 +21,9 @@ Y(1:kp,1) = Ypp;
 e(1:kp) = 0;
 
 %Zmiana wartości zadanej
-y_zad(1:60) = 4;
-y_zad(60:300) = 4.2;
-y_zad(300:kk) = 3.8;
+y_zad(1:kp+10) = 4;
+y_zad(kp+10:350) = 4.2;
+y_zad(350:kk) = 3.8;
 
 %% Parametry Regulatora
 

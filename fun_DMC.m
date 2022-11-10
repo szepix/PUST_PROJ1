@@ -1,15 +1,14 @@
-clear; clc;
+function error = fun_DMC(zmienne)
+
+N = zmienne(1);
+Nu = zmienne(2);
+lamb = zmienne(3);
+D = 80;
+
+%% Wyznaczanie macierzy oraz innych parametrów regulatora
 
 file = load("odp_skok.mat");
 s = file.Y;
-
-%% Parametry regulatora
-Nu = 2.000;
-N = 16.000;
-D = 80;
-lamb = 0.1614;
-
-%% Wyznaczanie macierzy oraz innych parametrów regulatora
 
 %Wyznaczanie macierzy M
 M=zeros(N,Nu);
@@ -49,7 +48,7 @@ yzad(1:kp+10) = 4;
 yzad(kp+10:350) = 4.2;
 yzad(350:kk) = 3.8;
 
-e = 0;
+error = 0;
 
 du_max = 0.05;
 du_min = -0.05;
@@ -96,27 +95,7 @@ for k=kp:kk
         u(k) = u_min;
     end
 
-    e = e + (yzad(k) - y(k))^2;
+    error = error + (yzad(k) - y(k))^2;
 
 end
-
-display(e)
-
-iteracja = 0:1:kk-1;  
-%Plot wyjście
-figure;
-stairs(iteracja, y)
-hold on;
-stairs(iteracja, yzad,"--");
-hold off;
-title("Odpowiedź skokowa układu z regulatorem DMC" + newline + "D = " + D + " N = " + N + " Nu = " + Nu +  " lambda = " + lamb); 
-xlabel('k'); ylabel("y");
-xlim([0 650])
-legend("y","y_z_a_d", "Location", "northeast")
-
-%Plot sterowanie
-figure;
-stairs(iteracja, u)
-title("Sterowanie układu z regulatorem DMC" + newline + "D = " + D + " N = " + N + " Nu = " + Nu + " lambda = " + lamb); 
-xlabel('k'); ylabel("u");
-legend("Sterowanie regulatora", "Location", "best")
+end

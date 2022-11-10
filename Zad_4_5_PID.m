@@ -27,9 +27,9 @@ y_zad(350:kk) = 3.8;
 
 %% Parametry Regulatora
 
-Kp = 0.8742;
-Ti = 5.7007;
-Td = 2.8048;
+Kp = 0.6291;
+Ti = 7.5975;
+Td = 4.0725e-08;
 
 r0 = Kp*(1 + T/(2*Ti) + Td/T);
 r1 = Kp*(T/(2*Ti) - (2*Td)/T -1);
